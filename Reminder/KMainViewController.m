@@ -89,19 +89,22 @@
     
     NSCalendar *calendar = [NSCalendar currentCalendar];
     NSDateComponents *oneDayAgoComponents = [[NSDateComponents alloc] init];
-    oneDayAgoComponents.minute = 5;
+    oneDayAgoComponents.minute = 2;
     NSDate *startDate = [calendar dateByAddingComponents:oneDayAgoComponents
                                                   toDate:[NSDate date]
                                                  options:0];
     
     NSDateComponents *oneYearFromNowComponents = [[NSDateComponents alloc] init];
-    oneYearFromNowComponents.minute = 6;
+    oneYearFromNowComponents.minute = 10;
     NSDate *endDate = [calendar dateByAddingComponents:oneYearFromNowComponents
                                                        toDate:[NSDate date]
                                                       options:0];
     
     event.startDate = startDate;
     event.endDate = endDate;
+    
+    // 加入提醒时间
+    [event addAlarm:[EKAlarm alarmWithAbsoluteDate:startDate]];
     
     NSError *error = nil;
     [self.eventStore saveEvent:event span:EKSpanFutureEvents commit:YES error:&error];
